@@ -10,4 +10,9 @@ export class OrdersController {
   async processPayment(@Body() body: ShopifyOrderResponse) {
     return this.ordersService.onOrderReceived(body);
   }
+
+  @Post('fulfilled')
+  async fulfillOrder(@Body() body: ShopifyOrderResponse) {
+    return this.ordersService.onOrderFulfilled(body);
+  }
 }

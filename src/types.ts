@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 export interface ShopifyOrderResponse {
   id: number;
   admin_graphql_api_id: string;
-  app_id: any;
-  browser_ip: any;
+  app_id: number;
+  browser_ip: string;
   buyer_accepts_marketing: boolean;
-  cancel_reason: string;
-  cancelled_at: string;
+  cancel_reason: any;
+  cancelled_at: any;
   cart_token: any;
-  checkout_id: any;
-  checkout_token: any;
-  client_details: any;
+  checkout_id: number;
+  checkout_token: string;
+  client_details: ClientDetails;
   closed_at: any;
   company: any;
-  confirmation_number: any;
+  confirmation_number: string;
   confirmed: boolean;
-  contact_email: string;
+  contact_email: any;
   created_at: string;
   currency: string;
   current_subtotal_price: string;
@@ -36,7 +37,7 @@ export interface ShopifyOrderResponse {
   fulfillment_status: string;
   landing_site: any;
   landing_site_ref: any;
-  location_id: any;
+  location_id: number;
   merchant_of_record_app_id: any;
   name: string;
   note: any;
@@ -50,17 +51,17 @@ export interface ShopifyOrderResponse {
   phone: any;
   po_number: any;
   presentment_currency: string;
-  processed_at: any;
-  reference: any;
+  processed_at: string;
+  reference: string;
   referring_site: any;
-  source_identifier: any;
+  source_identifier: string;
   source_name: string;
   source_url: any;
   subtotal_price: string;
   subtotal_price_set: SubtotalPriceSet;
   tags: string;
   tax_exempt: boolean;
-  tax_lines: any[];
+  tax_lines: TaxLine[];
   taxes_included: boolean;
   test: boolean;
   token: string;
@@ -77,16 +78,25 @@ export interface ShopifyOrderResponse {
   total_tip_received: string;
   total_weight: number;
   updated_at: string;
-  user_id: any;
-  billing_address: BillingAddress;
-  customer: Customer;
+  user_id: number;
+  billing_address: any;
+  customer: any;
   discount_applications: any[];
-  fulfillments: any[];
-  line_items: LineItem[];
-  payment_terms: any;
+  fulfillments: Fulfillment[];
+  line_items: LineItem2[];
+  payment_terms: PaymentTerms;
   refunds: any[];
-  shipping_address: ShippingAddress;
-  shipping_lines: ShippingLine[];
+  shipping_address: any;
+  shipping_lines: any[];
+}
+
+export interface ClientDetails {
+  accept_language: any;
+  browser_height: any;
+  browser_ip: string;
+  browser_width: any;
+  session_hash: any;
+  user_agent: string;
 }
 
 export interface CurrentSubtotalPriceSet {
@@ -164,7 +174,15 @@ export interface PresentmentMoney5 {
   currency_code: string;
 }
 
-export interface TotalDiscountsSet {
+export interface TaxLine {
+  price: string;
+  rate: number;
+  title: string;
+  price_set: PriceSet;
+  channel_liable: boolean;
+}
+
+export interface PriceSet {
   shop_money: ShopMoney6;
   presentment_money: PresentmentMoney6;
 }
@@ -179,7 +197,7 @@ export interface PresentmentMoney6 {
   currency_code: string;
 }
 
-export interface TotalLineItemsPriceSet {
+export interface TotalDiscountsSet {
   shop_money: ShopMoney7;
   presentment_money: PresentmentMoney7;
 }
@@ -194,7 +212,7 @@ export interface PresentmentMoney7 {
   currency_code: string;
 }
 
-export interface TotalPriceSet {
+export interface TotalLineItemsPriceSet {
   shop_money: ShopMoney8;
   presentment_money: PresentmentMoney8;
 }
@@ -209,7 +227,7 @@ export interface PresentmentMoney8 {
   currency_code: string;
 }
 
-export interface TotalShippingPriceSet {
+export interface TotalPriceSet {
   shop_money: ShopMoney9;
   presentment_money: PresentmentMoney9;
 }
@@ -224,7 +242,7 @@ export interface PresentmentMoney9 {
   currency_code: string;
 }
 
-export interface TotalTaxSet {
+export interface TotalShippingPriceSet {
   shop_money: ShopMoney10;
   presentment_money: PresentmentMoney10;
 }
@@ -239,112 +257,7 @@ export interface PresentmentMoney10 {
   currency_code: string;
 }
 
-export interface BillingAddress {
-  first_name: string;
-  address1: string;
-  phone: string;
-  city: string;
-  zip: string;
-  province: string;
-  country: string;
-  last_name: string;
-  address2: any;
-  company: string;
-  latitude: any;
-  longitude: any;
-  name: string;
-  country_code: string;
-  province_code: string;
-}
-
-export interface Customer {
-  id: number;
-  email: string;
-  accepts_marketing: boolean;
-  created_at: any;
-  updated_at: any;
-  first_name: string;
-  last_name: string;
-  state: string;
-  note: any;
-  verified_email: boolean;
-  multipass_identifier: any;
-  tax_exempt: boolean;
-  phone: any;
-  email_marketing_consent: EmailMarketingConsent;
-  sms_marketing_consent: any;
-  tags: string;
-  currency: string;
-  accepts_marketing_updated_at: any;
-  marketing_opt_in_level: any;
-  tax_exemptions: any[];
-  admin_graphql_api_id: string;
-  default_address: DefaultAddress;
-}
-
-export interface EmailMarketingConsent {
-  state: string;
-  opt_in_level: any;
-  consent_updated_at: any;
-}
-
-export interface DefaultAddress {
-  id: number;
-  customer_id: number;
-  first_name: any;
-  last_name: any;
-  company: any;
-  address1: string;
-  address2: any;
-  city: string;
-  province: string;
-  country: string;
-  zip: string;
-  phone: string;
-  name: string;
-  province_code: string;
-  country_code: string;
-  country_name: string;
-  default: boolean;
-}
-
-export interface LineItem {
-  id: number;
-  admin_graphql_api_id: string;
-  attributed_staffs: AttributedStaff[];
-  fulfillable_quantity: number;
-  fulfillment_service: string;
-  fulfillment_status: any;
-  gift_card: boolean;
-  grams: number;
-  name: string;
-  price: string;
-  price_set: PriceSet;
-  product_exists: boolean;
-  product_id: number;
-  properties: any[];
-  quantity: number;
-  requires_shipping: boolean;
-  sku: string;
-  taxable: boolean;
-  title: string;
-  total_discount: string;
-  total_discount_set: TotalDiscountSet;
-  variant_id: number;
-  variant_inventory_management: string;
-  variant_title: any;
-  vendor: any;
-  tax_lines: any[];
-  duties: any[];
-  discount_allocations: any[];
-}
-
-export interface AttributedStaff {
-  id: string;
-  quantity: number;
-}
-
-export interface PriceSet {
+export interface TotalTaxSet {
   shop_money: ShopMoney11;
   presentment_money: PresentmentMoney11;
 }
@@ -359,7 +272,63 @@ export interface PresentmentMoney11 {
   currency_code: string;
 }
 
-export interface TotalDiscountSet {
+export interface Fulfillment {
+  id: number;
+  admin_graphql_api_id: string;
+  created_at: string;
+  location_id: number;
+  name: string;
+  order_id: number;
+  origin_address: OriginAddress;
+  receipt: Receipt;
+  service: string;
+  shipment_status: any;
+  status: string;
+  tracking_company: any;
+  tracking_number: any;
+  tracking_numbers: any[];
+  tracking_url: any;
+  tracking_urls: any[];
+  updated_at: string;
+  line_items: LineItem[];
+}
+
+export interface OriginAddress {}
+
+export interface Receipt {}
+
+export interface LineItem {
+  id: number;
+  admin_graphql_api_id: string;
+  attributed_staffs: any[];
+  fulfillable_quantity: number;
+  fulfillment_service: string;
+  fulfillment_status: string;
+  gift_card: boolean;
+  grams: number;
+  name: string;
+  price: string;
+  price_set: PriceSet2;
+  product_exists: boolean;
+  product_id: number;
+  properties: any[];
+  quantity: number;
+  requires_shipping: boolean;
+  sku: string;
+  taxable: boolean;
+  title: string;
+  total_discount: string;
+  total_discount_set: TotalDiscountSet;
+  variant_id: number;
+  variant_inventory_management: string;
+  variant_title: any;
+  vendor: string;
+  tax_lines: TaxLine2[];
+  duties: any[];
+  discount_allocations: any[];
+}
+
+export interface PriceSet2 {
   shop_money: ShopMoney12;
   presentment_money: PresentmentMoney12;
 }
@@ -374,41 +343,7 @@ export interface PresentmentMoney12 {
   currency_code: string;
 }
 
-export interface ShippingAddress {
-  first_name: string;
-  address1: string;
-  phone: string;
-  city: string;
-  zip: string;
-  province: string;
-  country: string;
-  last_name: string;
-  address2: any;
-  company: string;
-  latitude: any;
-  longitude: any;
-  name: string;
-  country_code: string;
-  province_code: string;
-}
-
-export interface ShippingLine {
-  id: number;
-  carrier_identifier: any;
-  code: any;
-  discounted_price: string;
-  discounted_price_set: DiscountedPriceSet;
-  phone: any;
-  price: string;
-  price_set: PriceSet2;
-  requested_fulfillment_service_id: any;
-  source: string;
-  title: string;
-  tax_lines: any[];
-  discount_allocations: any[];
-}
-
-export interface DiscountedPriceSet {
+export interface TotalDiscountSet {
   shop_money: ShopMoney13;
   presentment_money: PresentmentMoney13;
 }
@@ -423,7 +358,15 @@ export interface PresentmentMoney13 {
   currency_code: string;
 }
 
-export interface PriceSet2 {
+export interface TaxLine2 {
+  channel_liable: boolean;
+  price: string;
+  price_set: PriceSet3;
+  rate: number;
+  title: string;
+}
+
+export interface PriceSet3 {
   shop_money: ShopMoney14;
   presentment_money: PresentmentMoney14;
 }
@@ -436,4 +379,109 @@ export interface ShopMoney14 {
 export interface PresentmentMoney14 {
   amount: string;
   currency_code: string;
+}
+
+export interface LineItem2 {
+  id: number;
+  admin_graphql_api_id: string;
+  attributed_staffs: any[];
+  fulfillable_quantity: number;
+  fulfillment_service: string;
+  fulfillment_status: string;
+  gift_card: boolean;
+  grams: number;
+  name: string;
+  price: string;
+  price_set: PriceSet4;
+  product_exists: boolean;
+  product_id: number;
+  properties: any[];
+  quantity: number;
+  requires_shipping: boolean;
+  sku: string;
+  taxable: boolean;
+  title: string;
+  total_discount: string;
+  total_discount_set: TotalDiscountSet2;
+  variant_id: number;
+  variant_inventory_management: string;
+  variant_title: any;
+  vendor: string;
+  tax_lines: TaxLine3[];
+  duties: any[];
+  discount_allocations: any[];
+}
+
+export interface PriceSet4 {
+  shop_money: ShopMoney15;
+  presentment_money: PresentmentMoney15;
+}
+
+export interface ShopMoney15 {
+  amount: string;
+  currency_code: string;
+}
+
+export interface PresentmentMoney15 {
+  amount: string;
+  currency_code: string;
+}
+
+export interface TotalDiscountSet2 {
+  shop_money: ShopMoney16;
+  presentment_money: PresentmentMoney16;
+}
+
+export interface ShopMoney16 {
+  amount: string;
+  currency_code: string;
+}
+
+export interface PresentmentMoney16 {
+  amount: string;
+  currency_code: string;
+}
+
+export interface TaxLine3 {
+  channel_liable: boolean;
+  price: string;
+  price_set: PriceSet5;
+  rate: number;
+  title: string;
+}
+
+export interface PriceSet5 {
+  shop_money: ShopMoney17;
+  presentment_money: PresentmentMoney17;
+}
+
+export interface ShopMoney17 {
+  amount: string;
+  currency_code: string;
+}
+
+export interface PresentmentMoney17 {
+  amount: string;
+  currency_code: string;
+}
+
+export interface PaymentTerms {
+  id: number;
+  created_at: string;
+  due_in_days: any;
+  payment_schedules: PaymentSchedule[];
+  payment_terms_name: string;
+  payment_terms_type: string;
+  updated_at: string;
+}
+
+export interface PaymentSchedule {
+  id: number;
+  amount: string;
+  currency: string;
+  issued_at: any;
+  due_at: any;
+  completed_at: any;
+  created_at: string;
+  updated_at: string;
 }

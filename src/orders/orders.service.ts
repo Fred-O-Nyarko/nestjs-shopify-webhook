@@ -25,11 +25,20 @@ export class OrdersService {
   }
 
   async onOrderFulfilled(data: ShopifyOrderResponse) {
-    const product = this.getSpecificProduct(data.line_items);
+    const fulfilledLineItems = data.fulfillments.reduce(
+      (acc: LineItem[], fulfillment) => {
+        return [...acc, ...fulfillment.line_items];
+      },
+      [],
+    );
+    const product = this.getSpecificProduct(fulfilledLineItems);
 
-    if (!product) return;
+    if (!product) {
+      console.log('No specific product found');
+      return;
+    }
 
-    await OrderQueries.updateOrder(this.prisma, {});
+    await OrderQueries.updateOrder(this.prisma, data);
   }
 
   private getSpecificProduct(orderedItems: LineItem[]) {

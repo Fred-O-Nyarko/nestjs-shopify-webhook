@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Status } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ShopifyOrderResponse } from 'src/types';
 
@@ -18,11 +18,14 @@ class OrderQueries {
     });
   }
 
-  static updateOrder(prisma: PrismaService, order: Prisma.OrderUpdateInput) {
+  static updateOrder(prisma: PrismaService, order: ShopifyOrderResponse) {
     return prisma.order.update({
-      data: order,
+      data: {
+        metaData: order as unknown as Prisma.JsonObject,
+        status: Status.COMPLETED,
+      },
       where: {
-        orderId: order.orderId?.toString(),
+        orderId: order.id?.toString(),
       },
     });
   }
