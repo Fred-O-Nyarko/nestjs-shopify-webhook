@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { IsInt, IsJSON, IsNotEmpty, IsNotEmptyObject } from 'class-validator';
+import { IsInt, IsJSON, IsNotEmpty } from 'class-validator';
 
 export class CreateDumpDto {
   @IsJSON()
