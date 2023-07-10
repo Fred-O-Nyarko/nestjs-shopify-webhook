@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { MailerService } from 'src/mailer/mailer.service';
-import { OrdersService } from './orders.service';
-import OrderQueries from './orders.queries';
-import { orderCreateFixture } from './fixtures/order.create';
-import { orderFulfillFixture } from './fixtures/order.fulfill';
+import { OrdersService } from '../orders.service';
+import OrderQueries from '../orders.queries';
+import { orderCreateFixture } from '../fixtures/order.create';
+import { orderFulfillFixture } from '../fixtures/order.fulfill';
 import { ShopifyOrderResponse } from 'src/types';
 
 describe('OrdersService', () => {

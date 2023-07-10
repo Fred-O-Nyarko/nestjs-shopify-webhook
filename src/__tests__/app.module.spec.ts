@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from './app.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PrismaModule } from './prisma/prisma.module';
-import { OrdersModule } from './orders/orders.module';
-import { MailerModule } from './mailer/mailer.module';
+import { AppModule } from '../app.module';
+import { AppController } from '../app.controller';
+import { AppService } from '../app.service';
+import { PrismaModule } from '../prisma/prisma.module';
+import { OrdersModule } from '../orders/orders.module';
+import { MailerModule } from '../mailer/mailer.module';
 
 describe('AppModule', () => {
   let module: TestingModule;

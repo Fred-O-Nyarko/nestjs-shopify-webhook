@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import { CreateDumpDto } from './create-dump.dto';
-import { orderCreateFixture } from '../fixtures/order.create';
+import { CreateDumpDto } from '../create-dump.dto';
+import { orderCreateFixture } from '../../fixtures/order.create';
 
 describe('CreateDumpDto', () => {
   it('should validate a valid CreateDumpDto instance', async () => {

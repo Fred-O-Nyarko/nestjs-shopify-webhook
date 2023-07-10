@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrdersModule } from './orders.module';
-import { OrdersController } from './orders.controller';
-import { OrdersService } from './orders.service';
+import { OrdersModule } from '../orders.module';
+import { OrdersController } from '../orders.controller';
+import { OrdersService } from '../orders.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { MailerModule } from 'src/mailer/mailer.module';
 

@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrdersController } from './orders.controller';
-import { OrdersService } from './orders.service';
+import { OrdersController } from '../orders.controller';
+import { OrdersService } from '../orders.service';
 import { ShopifyOrderResponse } from 'src/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { MailerService } from 'src/mailer/mailer.service';
-import { orderFulfillFixture } from './fixtures/order.fulfill';
-import { orderCreateFixture } from './fixtures/order.create';
+import { orderFulfillFixture } from '../fixtures/order.fulfill';
+import { orderCreateFixture } from '../fixtures/order.create';
 
 describe('OrdersController', () => {
   let controller: OrdersController;
