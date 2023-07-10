@@ -2,12 +2,13 @@
   "name": "shopify-webhook-app",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Frederick Obeng-Nyarko <nernuer@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "prepare": "husky install",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -17,7 +18,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "ts-check": "tsc --noEmit"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -44,6 +46,7 @@
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
     "jest": "^29.5.0",
     "prettier": "^2.8.8",
     "prisma": "^4.16.2",
