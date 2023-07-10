@@ -42,7 +42,10 @@ export class OrdersService {
     const product = this.getSpecificProduct(fulfilledLineItems);
 
     if (!product) {
-      console.log('No specific product found', data.id);
+      console.log(
+        'No specific product found',
+        fulfilledLineItems.map((item) => `${item.name} ${item.product_id}`),
+      );
       return;
     }
 

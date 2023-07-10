@@ -29,6 +29,9 @@ $ yarn install
 # starting the docker container (inside the project's root directory)
 $ docker-compose up 
 
+# run prisma migrations
+$ npx prisma migrate dev --name "init" 
+
 # watch mode
 $ yarn start:dev
 

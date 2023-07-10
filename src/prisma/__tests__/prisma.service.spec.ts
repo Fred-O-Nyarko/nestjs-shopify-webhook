@@ -35,7 +35,6 @@ describe('PrismaService', () => {
       } as any; // Create a mock instance of INestApplication
 
       const prismaClientMock = service as any; // Cast prismaService to any to access $on method
-      console.log(prismaClientMock.$on?.mock);
       const beforeExitCallback = prismaClientMock.$on.mock.calls[0][1]; // Get the callback registered for "beforeExit" event
 
       await beforeExitCallback(); // Trigger the callback
