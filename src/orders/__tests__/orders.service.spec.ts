@@ -43,10 +43,17 @@ describe('OrdersService', () => {
         prismaService,
         mockData,
       );
-      expect(service.notifyCustomer).toHaveBeenCalledWith(
-        mockData,
-        expect.any(String),
-      );
+      expect(service.notifyCustomer).toHaveBeenCalledWith(mockData, {
+        to: 'nernuer@gmail.com',
+        subject: 'Order Received',
+        text: `Order 5415104577855 received`,
+        html: `<div>
+      <p>Order 5415104577855 received</p>
+      <p>Product: The Collection Snowboard: Liquid</p>
+      <p>Quantity: 1</p>
+      <p>Price: 749.95</p>
+      </div>`,
+      });
       expect(result).toEqual({});
     });
 
@@ -111,10 +118,15 @@ describe('OrdersService', () => {
 
       jest.spyOn(mailerService, 'sendMail').mockResolvedValueOnce({} as any);
 
-      await service.notifyCustomer(mockOrder, 'test@example.com');
+      await service.notifyCustomer(mockOrder, {
+        to: 'test@example.com',
+        subject: 'Order fulfilled!',
+        text: `Hey there your order is finally fulfilled`,
+        html: '<h1>Hey there your order is finally fulfilled</h1>',
+      });
 
       expect(mailerService.sendMail).toHaveBeenCalledWith({
-        to: ['test@example.com'],
+        to: 'test@example.com',
         subject: 'Order fulfilled!',
         text: 'Hey there your order is finally fulfilled',
         html: '<h1>Hey there your order is finally fulfilled</h1>',
@@ -125,7 +137,12 @@ describe('OrdersService', () => {
       const mockOrder = orderCreateFixture as unknown as ShopifyOrderResponse;
       jest.spyOn(mailerService, 'sendMail');
 
-      await service.notifyCustomer(mockOrder, '');
+      await service.notifyCustomer(mockOrder, {
+        to: '',
+        subject: 'Order Received',
+        text: `Order received`,
+        html: 'test',
+      });
 
       expect(mailerService.sendMail).not.toHaveBeenCalled();
     });

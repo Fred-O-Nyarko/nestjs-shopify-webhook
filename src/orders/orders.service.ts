@@ -5,6 +5,7 @@ import OrderQueries from './orders.queries';
 import { LineItem, ShopifyOrderResponse } from 'src/types';
 import Constants from 'src/constants';
 import { MailerService } from 'src/mailer/mailer.service';
+import { MailgunMessageData } from 'mailgun.js';
 
 @Injectable()
 export class OrdersService {
@@ -14,8 +15,19 @@ export class OrdersService {
     const order = await OrderQueries.saveOrder(this.prisma, data);
 
     const product = this.getSpecificProduct(data.line_items);
-    console.log('product', product?.product_id);
-    if (!!product) await this.notifyCustomer(data, Constants.SPECIFIC_EMAIL);
+
+    if (!!product)
+      await this.notifyCustomer(data, {
+        to: Constants.SPECIFIC_EMAIL,
+        subject: 'Order Received',
+        text: `Order ${data.id} received`,
+        html: `<div>
+      <p>Order ${data.id} received</p>
+      <p>Product: ${product.name}</p>
+      <p>Quantity: ${product.quantity}</p>
+      <p>Price: ${product.price}</p>
+      </div>`,
+      });
 
     return order;
   }
@@ -45,15 +57,15 @@ export class OrdersService {
     );
   }
 
-  async notifyCustomer(order: ShopifyOrderResponse, email: string) {
-    console.log(`Notifying customer ${email} ${order.id}`);
-    if (!email) return;
+  async notifyCustomer(
+    order: ShopifyOrderResponse,
+    options: MailgunMessageData,
+  ) {
+    console.log(`Notifying customer ${options.to} ${order.id}`);
+    if (!options.to) return;
     await this.mailer
       .sendMail({
-        to: [email],
-        subject: 'Order fulfilled!',
-        text: 'Hey there your order is finally fulfilled',
-        html: '<h1>Hey there your order is finally fulfilled</h1>',
+        ...options,
       })
       .then((msg) => console.log('Email sent successfully =>', msg))
       .catch((err) => console.log('Error sending email =>', err));
