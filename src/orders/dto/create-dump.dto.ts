@@ -3,7 +3,7 @@ import { IsInt, IsJSON, IsNotEmpty, IsNotEmptyObject } from 'class-validator';
 
 export class CreateDumpDto {
   @IsJSON()
-  @IsNotEmptyObject()
+  @IsNotEmpty()
   dump: Prisma.JsonObject;
 
   @IsInt()

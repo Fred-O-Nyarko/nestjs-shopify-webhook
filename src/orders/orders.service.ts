@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import OrderQueries from './orders.queries';
@@ -14,14 +13,9 @@ export class OrdersService {
   async onOrderReceived(data: ShopifyOrderResponse) {
     const order = await OrderQueries.saveOrder(this.prisma, data);
 
-    const emails = new Set([
-      data.email,
-      data.customer?.email,
-      Constants.SPECIFIC_EMAIL,
-    ]);
-
     const product = this.getSpecificProduct(data.line_items);
-    if (!!product) await this.notifyCustomer(data, emails);
+    console.log('product', product?.product_id);
+    if (!!product) await this.notifyCustomer(data, Constants.SPECIFIC_EMAIL);
 
     return order;
   }
@@ -36,7 +30,7 @@ export class OrdersService {
     const product = this.getSpecificProduct(fulfilledLineItems);
 
     if (!product) {
-      console.log('No specific product found');
+      console.log('No specific product found', data.id);
       return;
     }
 
@@ -51,11 +45,12 @@ export class OrdersService {
     );
   }
 
-  async notifyCustomer(order: ShopifyOrderResponse, emails: Set<string>) {
-    console.log(`Notifying customer ${emails} ${order.id}`);
+  async notifyCustomer(order: ShopifyOrderResponse, email: string) {
+    console.log(`Notifying customer ${email} ${order.id}`);
+    if (!email) return;
     await this.mailer
       .sendMail({
-        to: ['nernuer@gmail.com'],
+        to: [email],
         subject: 'Order fulfilled!',
         text: 'Hey there your order is finally fulfilled',
         html: '<h1>Hey there your order is finally fulfilled</h1>',
