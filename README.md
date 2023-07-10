@@ -45,7 +45,8 @@ $ ngrok http 3000
 
 ## A few things to note
 - Currently not verifying the webhooks with HMAC Signature.
-- 
+- Only two types of webhooks are being received: `orders/create` and `orders/fulfilled`. This can be extended to receive other types of webhooks.
+- Things like rate limiting, caching, etc. have not been implemented as this is merely a tiny project.
 ## Test
 I didn't write e2e tests. I have however written unit tests for the most important parts of the application.
 ```bash
